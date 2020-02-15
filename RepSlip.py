@@ -16,7 +16,7 @@ class Repslicing(object):
 
     obviously if you type a == b you get the entire object but with a partially reversed order:
 
-    Danger!:
+    WARNING!:
     but if:
     print(aRs[2:-6])
     [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
