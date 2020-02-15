@@ -16,6 +16,13 @@ class Repslicing(object):
 
     obviously if you type a == b you get the entire object but with a partially reversed order:
 
+    Danger!:
+    but if:
+    print(aRs[2:-6])
+    [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
+    It's a overlapping mode.
+
+
     i.e.:
 
     a = Reslicing(["a", "b", "c", "d", "e", "f"])
@@ -39,9 +46,12 @@ class Repslicing(object):
         return self.object[item.start:item.stop:item.step]
 
 
-a = list(i for i in range(10))
-aRs = Repslicing(a)
+a = (i for i in range(10))
+aRs = Repslicing(list(a))
 
+print(aRs[2:-6]) # that's a overlapping mode!
+print(aRs[-2:-6])
+print(aRs[-6:-2])
 print(aRs[2:6])
 print(aRs[4:4])
 print(aRs[6:2])
@@ -51,18 +61,27 @@ print(2*"\n")
 a = tuple(i for i in range(10))
 aRs = Repslicing(a)
 
+print(aRs[2:-6]) # that's a overlapping mode!
+print(aRs[-2:-6])
+print(aRs[-6:-2])
 print(aRs[2:6])
 print(aRs[4:4])
 print(aRs[6:2])
 
 '''
 /usr/bin/python3.8 /home/alex/PycharmProjects/robaGenerica/RepSlip.py
+[2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
+[8, 9, 0, 1, 2, 3]
+[4, 5, 6, 7]
 [2, 3, 4, 5]
 [4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
 [6, 7, 8, 9, 0, 1]
 
 
 
+(2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3)
+(8, 9, 0, 1, 2, 3)
+(4, 5, 6, 7)
 (2, 3, 4, 5)
 (4, 5, 6, 7, 8, 9, 0, 1, 2, 3)
 (6, 7, 8, 9, 0, 1)
