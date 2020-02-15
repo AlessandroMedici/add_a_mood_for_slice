@@ -1,3 +1,5 @@
+WAITING: It's just a bug :-)))
+    
 class Repslicing(object):
     """
     This class adds a 'replay' (?) mode to slice operator.
