@@ -10,7 +10,6 @@ class Repslicing():
                 maxOverlap = 0 -> no overlap admitted, if any then program raise an Exception
                 maxOverlap = -1 -> check disabled
                 look for example past class declaration.
-                DANGER: check is inefective when step is more than 1
                 
 
     Normally, if you type[a:b:step] with a < b, (step isn't relevant), you obtain a empty element.
@@ -45,7 +44,6 @@ class Repslicing():
         maxOverlap = 0 -> no overlap admitted, if any then program raise an Exception
         maxOverlap = -1 -> check disabled
         look for example past class declaration.
-        DANGER: check is inefective when step is more than 1
         """
 
         self.object = object
@@ -58,17 +56,22 @@ class Repslicing():
         stop = item.stop
         step = item.step
 
-        if item.start >= item.stop:
+        if type(start) == type(stop) == type(1) and item.start >= item.stop:
 
-            lenght= len(self.object)
+            lenght = len(self.object)
 
-            result = self.object[start::step] + self.object[:stop:step]
-            lenResult = len(result) - lenght
+            a = self.object[start::step]
+            b = self.object[:stop:step]
 
-            if type(start) == type(stop) == type(1) and item.start >= item.stop:
-                raise Exception('Too more overlapping there!', "get "+str(lenResult - self.overlap)+" but only "+str(self.overlap)+" is admitted.")
+            aSet = set(a)
+            lenInterS = len(aSet.intersection(set(b)))
 
-            return result
+            if self.overlap >= 0 and (self.overlap < lenInterS):
+                raise Exception('Too more overlapping there!',
+                                "get " + str(lenInterS) + " but only " + str(
+                                    self.overlap) + " is admitted.")
+
+            return a + b
 
         return self.object[item.start:item.stop:item.step]
 
