@@ -58,7 +58,7 @@ class Repslicing():
             result = self.object[start::step] + self.object[:stop:step]
             lenResult = len(result) - lenght
 
-            if self.overlap >= 0 and (self.overlap < lenResult):
+            if type(start) == type(stop) == type(1) and item.start >= item.stop:
                 raise Exception('Too more overlapping there!', "get "+str(lenResult - self.overlap)+" but only "+str(self.overlap)+" is admitted.")
 
             return result
