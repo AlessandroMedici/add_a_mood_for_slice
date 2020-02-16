@@ -60,8 +60,7 @@ class Repslicing():
             b = self.object[:stop:step]
 
             aSet = set(a)
-            lenInterS = len(aSet.intersection(set(b)))
-            # -> the lenght of intersection is the lenght of overlap
+            lenInterS = len(aSet.intersection(set(b))) # -> the lenght of intersection is the lenght of overlap
 
             if self.overlap >= 0 and (self.overlap < lenInterS):
                 raise Exception('Too many overlapping here!',
