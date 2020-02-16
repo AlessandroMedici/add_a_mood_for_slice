@@ -36,6 +36,7 @@ class Repslicing():
 
     def __init__(self, object, maxOverlap = 0):
         """
+        object -> a spiceable object
         maxOverlap => 0 -> that's the max overlap admitted
         i.e.:  with maxOverlap = 0 -> there's no overlap admitted, if there's any, then the program raises an Exception
         maxOverlap = -1 -> the check is disabled
@@ -71,7 +72,7 @@ class Repslicing():
 # Example code:
 
 a = (i for i in range(10))
-aRs = Repslicing(list(a), 3) # here the most overlaps granted from a list object are 3 
+aRs = Repslicing(list(a), 3) # here the most overlaps granted from this list object are 3 
 
 print(aRs[-2:-6])
 print(aRs[-6:2])
@@ -95,7 +96,7 @@ print(aRs[2:-6]) # this is for two overlaps
 print(2*"\n")
 
 a = tuple(i for i in range(10))
-aRs = Repslicing(a, 0) # here no overlap is admitted (on tuple object)
+aRs = Repslicing(a, 0) # here no overlap is admitted (on this tuple object)
 
 print(aRs[-2:-6])
 print(aRs[-6:-2])
