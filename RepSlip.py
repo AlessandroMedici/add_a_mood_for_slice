@@ -1,4 +1,4 @@
-class Repslicing(object):
+class Repslicing():
     """
     This class adds a 'replay' (?) mode to slice operator.
 
