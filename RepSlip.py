@@ -1,5 +1,3 @@
-WAITING: It's just a bug :-)))
-    
 class Repslicing(object):
     """
     This class adds a 'replay' (?) mode to slice operator.
@@ -18,11 +16,14 @@ class Repslicing(object):
 
     obviously if you type a == b you get the entire object but with a partially reversed order:
 
-    WARNING!:
-    but if:
-    print(aRs[2:-6])
-    [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
-    It's a overlapping mode.
+    VERY BIG WARNING!:
+        any negative index get a unpredictable and, possible, overlapping result, depending from object's lenght:
+
+        i.e.:
+        a = Reslicing(["a", "b", "c", "d", "e", "f"])
+        print(aRs[2:-6])
+        [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
+        It's obviosly a overlapping mode.
 
 
     i.e.:
