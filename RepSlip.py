@@ -65,6 +65,7 @@ class Repslicing():
 
             aSet = set(a)
             lenInterS = len(aSet.intersection(set(b)))
+            # -> len of intersection is the len of overlap
 
             if self.overlap >= 0 and (self.overlap < lenInterS):
                 raise Exception('Too more overlapping there!',
