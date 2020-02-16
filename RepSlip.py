@@ -6,11 +6,6 @@ class Repslicing():
 
     object ->   must be an iterable and sequentially object, like a list,
                 a tuple or any self-made object that accepts ":" (slice) operator...
-                
-    maxOverlap -> must be an integer that set the max overlapping admitted
-                when maxOverlap = 0 -> no overlap admitted
-                when maxOverlap < 0 -> no check for overlap
-                other .... obvius. 
 
     Normally, if you type[a:b:step] with a < b, (step isn't relevant), you obtain a empty element.
     It's the same if you type type[a:b:step] with a == b
@@ -64,7 +59,7 @@ class Repslicing():
             result = self.object[start::step] + self.object[:stop:step]
             lenResult = len(result) - lenght
 
-            if self.overlap < lenResult:
+            if self.overlap >= 0 and (self.overlap < lenResult):
                 raise Exception('Too more overlapping there!', "get "+str(lenResult - self.overlap)+" but only "+str(self.overlap)+" is admitted.")
 
             return result
@@ -76,6 +71,22 @@ a = (i for i in range(10))
 aRs = Repslicing(list(a), 3)
 '''
 above is granted for max 3 overlap
+'''
+
+
+print(aRs[-2:-6])
+print(aRs[-6:2])
+print(aRs[2:6])
+print(aRs[4:4])
+print(aRs[6:2])
+print(aRs[2:-6]) # that's for two overlapping code
+
+print(2*"\n")
+
+a = (i for i in range(10))
+aRs = Repslicing(list(a), -1)
+'''
+above is stated for no check on overlap
 '''
 
 
