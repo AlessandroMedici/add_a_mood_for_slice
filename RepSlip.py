@@ -52,7 +52,7 @@ class Repslicing():
         stop = item.stop
         step = item.step
 
-        if type(start) == type(stop) == type(1) and item.start >= item.stop:
+        if type(start) == type(stop) == type(1) and start >= stop:
             a = self.object[start::step]
             b = self.object[:stop:step]
 
