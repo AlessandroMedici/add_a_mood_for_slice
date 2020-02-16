@@ -114,12 +114,6 @@ print(aRs[2:-6]) # that's for two overlapping code BUT no overlap admitted there
 
 '''
 /usr/bin/python3.8 /home/alex/PycharmProjects/robaGenerica/RepSlip.py
-Traceback (most recent call last):
-  File "/home/alex/PycharmProjects/robaGenerica/RepSlip.py", line 105, in <module>
-    print(aRs[2:-6])  # that's for two overlapping code BUT no overlap admitted there.
-  File "/home/alex/PycharmProjects/robaGenerica/RepSlip.py", line 53, in __getitem__
-    raise Exception('Too more overlapping there!',
-Exception: ('Too more overlapping there!', 'get 2 but only 0 is admitted.')
 [8, 9, 0, 1, 2, 3]
 []
 [2, 3, 4, 5]
@@ -139,9 +133,15 @@ Exception: ('Too more overlapping there!', 'get 2 but only 0 is admitted.')
 
 
 (8, 9, 0, 1, 2, 3)
-(4, 5, 6, 7)
+()
 (2, 3, 4, 5)
 (4, 5, 6, 7, 8, 9, 0, 1, 2, 3)
 (6, 7, 8, 9, 0, 1)
+Traceback (most recent call last):
+  File "/home/alex/PycharmProjects/robaGenerica/RepSlip.py", line 105, in <module>
+    print(aRs[2:-6])  # that's for two overlapping code BUT no overlap admitted there.
+  File "/home/alex/PycharmProjects/robaGenerica/RepSlip.py", line 53, in __getitem__
+    raise Exception('Too more overlapping there!',
+Exception: ('Too more overlapping there!', 'get 2 but only 0 is admitted.')
 
 Process finished with exit code 1'''
