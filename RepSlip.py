@@ -74,7 +74,7 @@ class Repslicing():
 
             return a + b
 
-        return self.object[item.start:item.stop:item.step]
+        return self.object[start:stop:step]
 
 # Example code:
 
