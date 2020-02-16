@@ -70,7 +70,7 @@ class Repslicing():
 a = (i for i in range(10))
 aRs = Repslicing(list(a), 3)
 '''
-above is granted for max 3 overlap n list object
+above is granted for max 3 overlap on a list object
 '''
 
 
