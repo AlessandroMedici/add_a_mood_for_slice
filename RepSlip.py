@@ -15,14 +15,7 @@ class Repslicing():
     result = type[a::step]+type[:b:step]
 
     obviously if you type a == b you get the entire object but with a partially reversed order:
-
-    WARNING!:
-        but if:
-        print(aRs[2:-6])
-        [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
-        It's a overlapping mode.
-
-
+    
     i.e.:
 
     a = Reslicing(["a", "b", "c", "d", "e", "f"], maxOverlap = 0)
@@ -31,14 +24,21 @@ class Repslicing():
     a[4:4]
     ["e", "f", "a", "b", "c", "d"]
 
+    WARNING!:
+        but if:
+        print(aRs[2:-6])
+        [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
+        It's a overlapping mode.
+
     other normally slicing modes operate as usual.
     """
 
     def __init__(self, object, maxOverlap = 0):
         """
-        maxOverlap = 0 -> no overlap, if any then program raise an Exception
+        maxOverlap more than 0 -> that'is the max overlap admitted
+        maxOverlap = 0 -> no overlap admitted, if any then program raise an Exception
         maxOverlap = -1 -> check disabled
-        look for example running this code.
+        look for example past class declaration.
         """
 
         self.object = object
@@ -50,7 +50,6 @@ class Repslicing():
         start = item.start
         stop = item.stop
         step = item.step
-
 
         if item.start >= item.stop:
 
@@ -66,11 +65,12 @@ class Repslicing():
 
         return self.object[item.start:item.stop:item.step]
 
+# Example code:
 
 a = (i for i in range(10))
 aRs = Repslicing(list(a), 3)
 '''
-above is granted for max 3 overlap
+above is granted for max 3 overlap n list object
 '''
 
 
@@ -86,7 +86,7 @@ print(2*"\n")
 a = (i for i in range(10))
 aRs = Repslicing(list(a), -1)
 '''
-above is stated for no check on overlap
+above is stated for no check for overlap
 '''
 
 
@@ -102,7 +102,7 @@ print(2*"\n")
 a = tuple(i for i in range(10))
 aRs = Repslicing(a, 0)
 '''
-above is granted for NO overlap
+above is granted for NO overlap on tuple object
 '''
 
 print(aRs[-2:-6])
