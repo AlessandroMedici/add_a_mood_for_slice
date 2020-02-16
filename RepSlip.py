@@ -6,6 +6,12 @@ class Repslicing():
 
     object ->   must be an iterable and sequentially object, like a list,
                 a tuple or any self-made object that accepts ":" (slice) operator...
+    maxOverlap more than 0 -> that'is the max overlap admitted
+                maxOverlap = 0 -> no overlap admitted, if any then program raise an Exception
+                maxOverlap = -1 -> check disabled
+                look for example past class declaration.
+                DANGER: check is inefective when step is more than 1
+                
 
     Normally, if you type[a:b:step] with a < b, (step isn't relevant), you obtain a empty element.
     It's the same if you type type[a:b:step] with a == b
@@ -39,6 +45,7 @@ class Repslicing():
         maxOverlap = 0 -> no overlap admitted, if any then program raise an Exception
         maxOverlap = -1 -> check disabled
         look for example past class declaration.
+        DANGER: check is inefective when step is more than 1
         """
 
         self.object = object
