@@ -17,7 +17,7 @@ class Repslicing(object):
     obviously if you type a == b you get the entire object but with a partially reversed order:
 
     VERY BIG WARNING!:
-        any negative index get a unpredictable and, possible, overlapping result, depending from object's lenght:
+        any negative index get a unpredictable and possible, overlapping result, depending from indexes and object's lenght:
 
         i.e.:
         a = Reslicing(["a", "b", "c", "d", "e", "f"])
