@@ -6,7 +6,8 @@ class Repslicing():
     object ->   must be an iterable and sequentiable object, like a list,
                 a tuple or any self-made object that accepts ":" (slice) operator.
                 (remember that no one generator is admitted, because generator isn't slicing object:
-                call Repslicing(i for i in range(10)) get a TypeError Error from python)
+                calling Repslicing(i for i in range(10)) get a TypeError Error from python,
+                but calling Repslicing([i for i in range(10)]) is admitted.
                 
     maxOverlap -> it's the max overlap admitted (default = 0)
                 maxOverlap = -1 -> the check is disabled
