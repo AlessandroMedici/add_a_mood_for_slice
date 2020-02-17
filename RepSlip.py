@@ -81,9 +81,6 @@ class ExtendedSlicing():
         stop = item.stop
         step = item.step
 
-        if step == 0:
-            return  # step no isn't never zero
-
         if type(start) == type(stop) == type(1) and start >= stop:
 
             a = self.object[start::step]
@@ -136,11 +133,15 @@ def test(n=100, maxoverlap=100):
             for start in range(-j, j):  # for all reasonable index start
                 for stop in range(-n, n):  # for all reasonable index stop
                     for step in range(0, overlap):  # for all reasonable index step
+                        
+                        if step == 0:
+                            continue  # step=0 isn't never admitted from python
+                        
                         try:
                             b = lis[start:stop:step]  # call spicing function
                         except ValueError as ve:  # trapping...
                             args = ve.args
-                            # catching poroblematic case, no other's possible:
+                            # catching problematic case, no other's admitted:
                             if args[2] == 0:
                                 if args[3] < 0:
                                     case[3] += 1
@@ -149,6 +150,17 @@ def test(n=100, maxoverlap=100):
                                 if args[3] < 0:
                                     case[6] += 1
                                     continue  # case[6] = start = 0, stop < 0
+                                    
+                            raise Exception('Unpredictet Error there',  # arg[0]
+                                     "get " + str(lenInterS) + " but only " + str(
+                                             self.overlap) + " is/are admitted.",  # arg[1]
+                                     start, # arg[2]
+                                     stop,  # arg[3]
+                                     step,  # arg[4]
+                                     len(a) + len(b),  # arg[5]
+                                     len(self.object)  # arg[6]
+                                     )
+                            
 
     for j, i in enumerate(case):
         print(text[j], i)
