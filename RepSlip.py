@@ -2,7 +2,8 @@ class ExtendedSlicing():
     """
     This class adds a 'replay' (?) mode to slice operator.
     
-    where:
+    where in __init__ :
+    
     object ->   must be an iterable and sequentiable object, like a list,
                 a tuple or any self-made object that accepts ":" (slice) operator.
                 (remember that no one generator is admitted, because generator isn't slicing object:
