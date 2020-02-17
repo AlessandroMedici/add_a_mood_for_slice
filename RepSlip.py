@@ -1,11 +1,12 @@
 class Repslicing():
     """
     This class adds a 'replay' (?) mode to slice operator.
+    
     where:
     object ->   must be an iterable and sequentiable object, like a list,
                 a tuple or any self-made object that accepts ":" (slice) operator.
-                (remember that no one iterator is admitted, because iterator isn't slicing object:
-                call Repslicing([i for i in range(10)] get a Exception Error from python)
+                (remember that no one generator is admitted, because generator isn't slicing object:
+                call Repslicing(i for i in range(10)) get a TypeError Error from python)
                 
     maxOverlap -> it's the max overlap admitted (default = 0)
                 maxOverlap = -1 -> the check is disabled
