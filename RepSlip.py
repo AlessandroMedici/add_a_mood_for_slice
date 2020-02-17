@@ -1,4 +1,4 @@
-class Repslicing():
+class ExtendedSlicing():
     """
     This class adds a 'replay' (?) mode to slice operator.
     
@@ -6,14 +6,15 @@ class Repslicing():
     object ->   must be an iterable and sequentiable object, like a list,
                 a tuple or any self-made object that accepts ":" (slice) operator.
                 (remember that no one generator is admitted, because generator isn't slicing object:
-                calling Repslicing(i for i in range(10)) get a TypeError Error from python,
-                but calling Repslicing([i for i in range(10)]) is admitted.
+                calling ExtendedSlicing(i for i in range(10)) get a TypeError Error from python,
+                but calling ExtendedSlicing([i for i in range(10)]) or ExtendedSlicing(aList)
+                is obviously admitted from python.
                 
     maxOverlap -> it's the max overlap admitted (default = 0)
                 maxOverlap = -1 -> the check is disabled
                 look the example that's past the class declaration.
                 
-    return -> a normal object the same class of original object NOT one of Repslicing class.
+    return -> a normal object the same class of original object NOT one instance of ExtendedSlicing class.
 
     Normally, if you type object[start:stop:step] with start <= stop, ("step" isn't relevant), you obtain an empty element.
     
@@ -29,7 +30,7 @@ class Repslicing():
     obviously if you type start == stop in this class you get the entire object but with a partially reversed order:
 
     i.e.:
-    a = Reslicing(["a", "b", "c", "d", "e", "f"], maxOverlap = 0)
+    a = ExtendedSlicing(["a", "b", "c", "d", "e", "f"], maxOverlap = 0)
     a[4:2]
     ["e", "f", "a", "b", "c"]
     a[4:4]
@@ -38,7 +39,7 @@ class Repslicing():
     admitting this mode in a call, obviously we are risking this case:
     
     WARNING! Look at this:
-        aRs = Repslicing([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        aRs = ExtendedSlicing([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         print(aRs[2:-6])
         [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
         It's an overlapping mode: with one or more duplicated item.
@@ -55,13 +56,13 @@ class Repslicing():
     
     if you type:
     aList = [1,2,3,4]
-    aList = Repslicing(aList)
+    aList = ExtendedSlicing(aList)
     aList = aList[3:4]
     
     the original aList are overwritted AND the resulting aList is a normal class of list.
     """
 
-    def __init__(self, object, maxOverlap=0):
+        def __init__(self, object, maxOverlap=0):
         """
         maxOverlap => 0 -> that's the max overlap admitted
         i.e.:  with maxOverlap = 0 -> there's no overlap admitted, if there's any, then the program raises an Exception
@@ -80,37 +81,37 @@ class Repslicing():
         step = item.step
 
         if step == 0:
-            return # step no isn't never zero
+            return  # step no isn't never zero
 
         if type(start) == type(stop) == type(1) and start >= stop:
 
             a = self.object[start::step]
             b = self.object[:stop:step]
 
-            if stop < 0 and start >= 0: # case[3] = start = 0 stop < 0 189225 case[6] = start > 0 stop < 0 1766100 are
-                                        # the only case with possible error. Time saving :)
+            if stop < 0 and start >= 0:  # case[3] = start = 0 stop < 0 189225 case[6] = start > 0 stop < 0 1766100 are
+                # the only case with possible error. Time saving :)
 
                 aSet = set(a)
-                lenInterS = len(aSet.intersection(set(b))) # -> the lenght of intersection is the lenght of overlap
+                lenInterS = len(aSet.intersection(set(b)))  # -> the lenght of intersection is the lenght of overlap
 
                 if self.overlap >= 0 and (self.overlap < lenInterS):
-                    raise ValueError('Too many overlapping here!', # arg[0]
-                                    "get " + str(lenInterS) + " but only " + str(
-                                    self.overlap) + " is/are admitted.", # arg[1]
-                                    start, # arg[2]
-                                    stop, # arg[3]
-                                    step, # arg[4]
-                                    len(a) + len(b), # arg[5]
-                                    len(self.object) # arg[6]
+                    raise ValueError('Too many overlapping here!',  # arg[0]
+                                     "get " + str(lenInterS) + " but only " + str(
+                                             self.overlap) + " is/are admitted.",  # arg[1]
+                                     start, # arg[2]
+                                     stop,  # arg[3]
+                                     step,  # arg[4]
+                                     len(a) + len(b),  # arg[5]
+                                     len(self.object)  # arg[6]
                                      )
 
             return a + b
 
         return self.object[start:stop:step]
 
-def test(n = 100, maxoverlap = 100):
 
-    case = [0,0,0,0,0,0,0,0,0]
+def test(n=100, maxoverlap=100):
+    case = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     text = '''
     case[0] = start < 0 stop < 0,
@@ -123,26 +124,26 @@ def test(n = 100, maxoverlap = 100):
     case[7] = start > 0 stop = 0,
     case[8] = start > 0 stop > 0,
     '''
-    text = text.split(sep = ",")
+    text = text.split(sep=",")
 
-    for j in range(n): # lenghts of objects in test
-        for overlap in range(-maxoverlap, maxoverlap): # for all reasonable overlap
+    for j in range(n):  # lenghts of objects in test
+        for overlap in range(-maxoverlap, maxoverlap):  # for all reasonable overlap
 
-            a = tuple(i for i in range(j)) # for all reasonable object's lenght
-            lis = Repslicing(a, overlap) # create a new object of this lenght
+            a = tuple(i for i in range(j))  # for all reasonable object's lenght
+            lis = ExtendedSlicing(a, overlap)  # create a new object of this lenght
 
-            for start in range(-j,j): # for all reasonable index start
-                for stop in range(-n,n): # for all reasonable index stop
-                    for step in range(0, overlap): # for all reasonable index step
+            for start in range(-j, j):  # for all reasonable index start
+                for stop in range(-n, n):  # for all reasonable index stop
+                    for step in range(0, overlap):  # for all reasonable index step
                         try:
-                            b = lis[start:stop:step] # call spicing function
-                        except ValueError as ve: # trapping...
+                            b = lis[start:stop:step]  # call spicing function
+                        except ValueError as ve:  # trapping...
                             args = ve.args
                             # catching poroblematic case, no other's possible:
                             if args[2] == 0:
                                 if args[3] < 0:
-                                    case[3] +=1
-                                    continue # case[3] = start = 0, stop < 0
+                                    case[3] += 1
+                                    continue  # case[3] = start = 0, stop < 0
                             if args[2] > 0:
                                 if args[3] < 0:
                                     case[6] += 1
@@ -152,5 +153,68 @@ def test(n = 100, maxoverlap = 100):
         print(text[j], i)
 
 
+def examples():
+    """ only a sample running example, full test is made into test method"""
+
+    def l(txt,val = ""):
+        print(txt,val)
+
+    baseList = [i for i in range(10)]
+    l("\nbaseList = [i for i in range(10)]", [i for i in range(10)])
+
+    sliced = ExtendedSlicing(baseList)
+    l("\nsliced = Repslicing(baseList)")
+
+    result = sliced[3:3]
+    l("\nresult = sliced[3:3] result = ",result)
+
+    result = baseList[3:3]
+    l("\nresult = baseList[3:3] result = ",result)
+
+    result = sliced[-2:-3]
+    l("\nresult = sliced[-2:-3] result = ",result)
+
+    result = baseList[-2:-3]
+    l("\nresult = baseList[-2:-3] result = ",result)
+
+    result = sliced[-3:-3]
+    l("\nresult = sliced[-3:-3] result = ",result)
+
+    result = baseList[-3:-3]
+    l("\nresult = baseList[-3:-3] result = ",result)
+
+    l("\nwith overlapping set at -1")
+
+    sliced = ExtendedSlicing(baseList,-1)
+    l("\nsliced = Repslicing(baseList,-1)")
+
+    result = sliced[-3:3]
+    l("\nresult = sliced[-3:3] result = ",result)
+
+    result = baseList[-3:3]
+    l("\nresult = baseList[-3:3] result = ",result)
+
+    result = sliced[2:-6]
+    l("\nresult = sliced[2:-6] result = ",result)
+
+    result = baseList[2:-6]
+    l("\nresult = baseList[2:-6] result = ",result)
+
+    result = sliced[3:-3]
+    l("\nresult = sliced[3:-3]  result = ",result)
+
+    result = baseList[3:-3]
+    l("\nresult = baseList[3:-3] result = ",result)
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
+
+    examples()
+
     test(n=20, maxoverlap=20)
