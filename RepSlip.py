@@ -151,7 +151,7 @@ def test(n=100, maxoverlap=100):
                                     case[6] += 1
                                     continue  # case[6] = start = 0, stop < 0
                                     
-                            raise Exception('Unpredictet Error there',  # arg[0]
+                            raise Exception('Unpredicted Error there',  # arg[0]
                                      "get " + str(lenInterS) + " but only " + str(
                                              self.overlap) + " is/are admitted.",  # arg[1]
                                      start, # arg[2]
