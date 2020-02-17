@@ -63,7 +63,7 @@ class ExtendedSlicing():
     the original aList are overwritted AND the resulting aList is a normal class of list.
     """
 
-        def __init__(self, object, maxOverlap=0):
+    def __init__(self, object, maxOverlap=0):
         """
         maxOverlap => 0 -> that's the max overlap admitted
         i.e.:  with maxOverlap = 0 -> there's no overlap admitted, if there's any, then the program raises an Exception
