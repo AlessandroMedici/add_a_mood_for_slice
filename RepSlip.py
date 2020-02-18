@@ -16,10 +16,10 @@ class ExtendedSlicing():
                 look the example that's past the class declaration.
 
     return -> a normal object the same class of original object NOT one instance of ExtendedSlicing class.
+    
     Normally, if you type object[start:stop:step] with start <= stop, ("step" isn't relevant), you obtain an empty
-    element.
-
-    Instead, using this class you get these results:
+    element. Instead, using this class you get these results:
+    
     result = object[start::step]+object[:stop:step]
 
     If start <= stop this class literally get 2 call to __getitem__ method of the underlying sliceable object:
