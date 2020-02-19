@@ -1,2 +1,98 @@
-DANGER!
-Work in progress, bug detected!
+class ExtendedSlicing():
+    """
+    This class adds a 'replay' (?) mode to slice operator.
+
+    where in __init__ :
+
+    object ->   must be an iterable and sequentiable object, like a list,
+                a tuple or any self-made object that accepts ":" (slice) operator.
+                (remember that no one generator is admitted, because generator isn't slicing object:
+                calling ExtendedSlicing(i for i in range(10)) get a TypeError Error from python,
+                but calling ExtendedSlicing([i for i in range(10)]) or ExtendedSlicing(aList)
+                is obviously admitted from python.
+
+    return -> a normal object the same class of original object but NOT one instance of ExtendedSlicing class.
+    
+    Work of this class:
+    
+    Normally in Python, if you type object[start:stop:step] with start <= stop, ("step" isn't relevant), you obtain an empty
+    element.
+
+    Instead, using this class you get these results:
+    result = object[start::step]+object[:stop:step]
+
+    If start <= stop this class literally get 2 call to __getitem__ method of the underlying sliceable object:
+    the first is object[start::step]
+    the second is object[:stop:step]
+
+    and return object[start::step]+object[:stop:step]
+
+    obviously if you type start equally stop in this class you get the entire object but with a partially reversed order:
+    i.e.:
+    a = ExtendedSlicing(["a", "b", "c", "d", "e", "f"], maxOverlap = 0)
+    a[4:2]
+    ["e", "f", "a", "b", "c"]
+    a[4:4]
+    ["e", "f", "a", "b", "c", "d"]
+
+    admitting this mode in a call, obviously we are risking this case:
+
+    WARNING! Look at this:
+        aRs = ExtendedSlicing([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        print(aRs[2:-6. step = 1])
+        [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
+        It's an overlapping mode: with one or more overlapping item depending of value of step.
+    
+    There we have only one check:
+      no one element is duplicated.
+
+    all other normally slicing modes operate as usual.
+
+    """
+    
+    def __init__(self, oBject: object):
+        """
+        @param oBject: a spliceable object
+        """
+        self.oBject = oBject
+
+    def __getitem__(self, item):
+        """oBject.__getitem__ reused"""
+        oBject = self.oBject
+
+        start = item.start
+        stop = item.stop
+        step = item.step
+
+        if start >= stop:
+            # extended slicing request
+            oBject = self.oBject
+            length = len(oBject)
+            if length == 0:
+                return []
+            a = oBject[start::step]
+            b = oBject[:stop:step]
+            length = len(oBject)
+
+            aSet = set(a)
+            bSet = set(b)
+            c = aSet.intersection(bSet)
+
+            if stop < 0 and start >= 0:
+
+                lenInterS = len(c)  # -> the lenght of intersection is the lenght of overlap
+                if lenInterS:
+                    # affordable error detecting, but too slow for a very large oBject
+                    raise ValueError('Too many overlapping here!',  # arg[0]
+                                     "get " + str(lenInterS) + " but not one is admitted.",  # arg[1]
+                                     start,  # arg[2]
+                                     stop,  # arg[3]
+                                     step,  # arg[4]
+                                     len(a) + len(b),  # arg[5]
+                                     len(oBject)  # arg[6]
+                                     )
+
+
+                return a + b
+
+        return self.oBject[start:stop:step]
