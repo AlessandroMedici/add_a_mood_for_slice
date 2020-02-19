@@ -46,7 +46,7 @@ class ExtendedSlicing():
 
     all other normally slicing modes operate as usual.
 
-    A last advise:
+    A last obvius advise:
 
     if you type:
     aList = [1,2,3,4]
