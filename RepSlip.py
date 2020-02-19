@@ -86,28 +86,24 @@ class ExtendedSlicing():
             a = self.oBject[start::step]
             b = self.oBject[:stop:step]
 
-            if stop < 0 and start >= 0:  # case[3] = start = 0 stop < 0 189225 case[6] = start > 0 stop < 0 1766100 are
-                # the only case with possible error. Time saving :)
+            aSet = set(a)
+            lenInterS = len(aSet.intersection(set(b)))  # -> the lenght of intersection is the lenght of overlap
 
-                aSet = set(a)
-                lenInterS = len(aSet.intersection(set(b)))  # -> the lenght of intersection is the lenght of overlap
-
-                if self.overlap >= 0 and (self.overlap < lenInterS):
-                    raise ValueError('Too many overlapping here!',  # arg[0]
-                                     "get " + str(lenInterS) + " but only " + str(
-                                             self.overlap) + " is/are admitted.",  # arg[1]
-                                     start,  # arg[2]
-                                     stop,  # arg[3]
-                                     step,  # arg[4]
-                                     len(a) + len(b),  # arg[5]
-                                     len(self.oBject),  # arg[6]
-                                     lenInterS, # arg[7]
-                                     self.overlap # arg[8])
+            if self.overlap >= 0 and (self.overlap < lenInterS):
+                raise ValueError('Too many overlapping here!',  # arg[0]
+                                 "get " + str(lenInterS) + " but only " + str(
+                                         self.overlap) + " is/are admitted.",  # arg[1]
+                                 start,  # arg[2]
+                                 stop,  # arg[3]
+                                 step,  # arg[4]
+                                 len(a) + len(b),  # arg[5]
+                                 len(self.oBject),  # arg[6]
+                                 lenInterS, # arg[7]
+                                 self.overlap # arg[8])
 
             return a + b
 
         return self.oBject[start:stop:step]
-
 
 def test(n=100, maxoverlap=100):
     case = [0, 0, 0, 0, 0, 0, 0, 0, 0]
