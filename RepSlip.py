@@ -31,6 +31,8 @@ class ExtendedSlicing():
     ["e", "f", "a", "b", "c"]
     a[4:4]
     ["e", "f", "a", "b", "c", "d"]
+    
+    LOOK AT step! Not many people know it!
 
     admitting this mode in a call, obviously we are risking this case:
 
@@ -40,8 +42,7 @@ class ExtendedSlicing():
         [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
         It's an overlapping mode: with one or more duplicated item.
 
-    I don't know if this overlapping is a your request or not, but if's the case this class raise a ValueError
-
+    I don't know if this overlapping is a your request or not, but if it's this class raise a ValueError
 
     all other normally slicing modes operate as usual.
 
@@ -54,9 +55,7 @@ class ExtendedSlicing():
 
     the original aList are overwritted AND the resulting aList is a normal class of list.
     """
-
-    # TODO: a semplified "case" function  like  case instruction on c with list or dict with element are fn or value
-
+    
     def __init__(self, oBject: object):
         """
         @param oBject: a spliceable object
@@ -89,7 +88,7 @@ class ExtendedSlicing():
 
                 lenInterS = len(c)  # -> the lenght of intersection is the lenght of overlap
                 if lenInterS:
-                    # affordable error detecting, but to slow for a very large oBject
+                    # affordable error detecting, but too slow for a very large oBject
                     raise ValueError('Too many overlapping here!',  # arg[0]
                                      "get " + str(lenInterS) + " but not one is admitted.",  # arg[1]
                                      start,  # arg[2]
