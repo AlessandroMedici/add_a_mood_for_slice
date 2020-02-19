@@ -1,3 +1,6 @@
+DANGER!
+Work in progress, bug detected!
+
 class ExtendedSlicing():
     """
     This class adds a 'replay' (?) mode to slice operator.
