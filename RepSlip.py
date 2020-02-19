@@ -1,6 +1,6 @@
 class ExtendedSlicing():
     """
-    This class adds a 'replay' (?) mode to slice operator.
+    This class adds a 'reverse' (?) mode to slice operator.
 
     where in __init__ :
 
