@@ -4,7 +4,7 @@ class ExtendedSlicing():
 
     where in __init__ :
 
-    object ->   must be an iterable and sequentiable object, like a list,
+    object ->   must be an spiceable object, like a list,
                 a tuple or any self-made object that accepts ":" (slice) operator.
                 (remember that no one generator is admitted, because generator isn't slicing object:
                 calling ExtendedSlicing(i for i in range(10)) get a TypeError Error from Python,
