@@ -9,7 +9,7 @@ class ExtendedSlicing():
                 (remember that no one generator is admitted, because generator isn't slicing object:
                 calling ExtendedSlicing(i for i in range(10)) get a TypeError Error from Python,
                 but calling ExtendedSlicing([i for i in range(10)]) or ExtendedSlicing(aList)
-                is obviously admitted from Python.
+                is admitted from Python.
 
     return -> a normal object the same class of original object NOT one instance of ExtendedSlicing class.
     
