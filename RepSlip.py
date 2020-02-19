@@ -11,23 +11,20 @@ class ExtendedSlicing():
                 but calling ExtendedSlicing([i for i in range(10)]) or ExtendedSlicing(aList)
                 is obviously admitted from python.
 
-    return -> a normal object the same class of original object but NOT one instance of ExtendedSlicing class.
-    
-    Work of this class:
-    
-    Normally in Python, if you type object[start:stop:step] with start <= stop, ("step" isn't relevant), you obtain an empty
+    return -> a normal object the same class of original object NOT one instance of ExtendedSlicing class.
+    Normally, if you type object[start:stop:step] with start <= stop, ("step" isn't relevant), you obtain an empty
     element.
 
     Instead, using this class you get these results:
     result = object[start::step]+object[:stop:step]
 
     If start <= stop this class literally get 2 call to __getitem__ method of the underlying sliceable object:
-    the first is object[start::step]
-    the second is object[:stop:step]
+        the first is object[start::step]
+        the second is object[:stop:step]
 
     and return object[start::step]+object[:stop:step]
 
-    obviously if you type start equally stop in this class you get the entire object but with a partially reversed order:
+    obviously if you type start == stop in this class you get the entire object but with a partially reversed order:
     i.e.:
     a = ExtendedSlicing(["a", "b", "c", "d", "e", "f"], maxOverlap = 0)
     a[4:2]
@@ -39,17 +36,27 @@ class ExtendedSlicing():
 
     WARNING! Look at this:
         aRs = ExtendedSlicing([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-        print(aRs[2:-6. step = 1])
+        print(aRs[2:-6])
         [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
-        It's an overlapping mode: with one or more overlapping item depending of value of step.
-    
-    There we have only one check:
-      no one element is duplicated.
+        It's an overlapping mode: with one or more duplicated item.
+
+    I don't know if this overlapping is a your request or not, but if's the case this class raise a ValueError
+
 
     all other normally slicing modes operate as usual.
 
+    A last advise:
+
+    if you type:
+    aList = [1,2,3,4]
+    aList = ExtendedSlicing(aList)
+    aList = aList[3:4]
+
+    the original aList are overwritted AND the resulting aList is a normal class of list.
     """
-    
+
+    # TODO: a semplified "case" function  like  case instruction on c with list or dict with element are fn or value
+
     def __init__(self, oBject: object):
         """
         @param oBject: a spliceable object
@@ -82,7 +89,7 @@ class ExtendedSlicing():
 
                 lenInterS = len(c)  # -> the lenght of intersection is the lenght of overlap
                 if lenInterS:
-                    # affordable error detecting, but too slow for a very large oBject
+                    # affordable error detecting, but to slow for a very large oBject
                     raise ValueError('Too many overlapping here!',  # arg[0]
                                      "get " + str(lenInterS) + " but not one is admitted.",  # arg[1]
                                      start,  # arg[2]
@@ -96,3 +103,28 @@ class ExtendedSlicing():
                 return a + b
 
         return self.oBject[start:stop:step]
+
+
+def test(n=20, maxoverlap=20):
+
+    for step in range(-n, n):  # for all reasonable index step
+        if step == 0:
+            continue  # step=0 isn't never admitted
+
+        for j in range(n):  # lenghts of objects in test
+
+            a = tuple(i for i in range(j))  # for all reasonable object's length
+            lis = ExtendedSlicing(a)  # create a new object of this length
+
+            for start in range(-n, n):  # for all reasonable index start
+                for stop in range(-n, n):  # for all reasonable index stop
+                    try:
+                        b = lis[start:stop:step]  # call spicing function
+                    except ValueError as ve:
+                        for h in ve.args:
+                            print(h)
+
+
+if __name__ == '__main__':
+
+    test(n=20)
