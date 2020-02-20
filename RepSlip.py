@@ -12,6 +12,9 @@ class ExtendedSlicing():
                 is admitted from Python.
 
     return -> a normal object the same class of original object NOT one instance of ExtendedSlicing class.
+              to allow it simple encapsulate:
+              Es = ExtendedSlicing
+              aExtendedSlicingObject = Es(Es([i for i in range(10)])
     
     
     Normally, if you type object[start:stop:step] with start <= stop, ("step" isn't relevant), you obtain an empty
