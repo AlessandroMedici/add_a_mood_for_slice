@@ -53,7 +53,7 @@ class ExtendedSlicing():
     the original aList are overwritted AND the resulting aList is a normal class of list.
     """
     
-    #TODO: check for limit before create a big sub list
+    #TODO: check for limits before create a big sub list
     
     def __init__(self, oBject: object):
         """
