@@ -84,7 +84,7 @@ class ExtendedSlicing():
                 # bSet = set(b)
 
                 # lenInterS = len(set(a).intersection(bSet))  # -> the lenght of intersection is the lenght of overlap
-                if (lenInterS:= len(aSet.intersection(set(b)))):
+                if (lenInterS:= len(set(a).intersection(set(b)))):
                     # affordable error detecting, but too slow for a very large oBject
                     raise ValueError('Too many overlapping here!',  # arg[0]
                                     "get " + str(lenInterS) + " but not one is admitted.",  # arg[1]
