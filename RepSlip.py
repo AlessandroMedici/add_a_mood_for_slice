@@ -78,13 +78,13 @@ class ExtendedSlicing():
             a = oBject[start::step]
             b = oBject[:stop:step]
             
-            if (stop < 0) and (step < 0):
+            if stop < 0 and step < 0:
 
                 # aSet = set(a)
                 # bSet = set(b)
 
                 # lenInterS = len(set(a).intersection(bSet))  # -> the lenght of intersection is the lenght of overlap
-                if (lenInterS:= len(set(a).intersection(set(b)))):
+                if lenInterS:= len(set(a).intersection(set(b))):
                     # affordable error detecting, but too slow for a very large oBject
                     raise ValueError('Too many overlapping here!',  # arg[0]
                                     "get " + str(lenInterS) + " but not one is admitted.",  # arg[1]
