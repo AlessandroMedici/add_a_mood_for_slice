@@ -69,7 +69,7 @@ class ExtendedSlicing():
         stop = item.stop
         step = item.step
 
-        if start >= stop:
+        if start >= stop or (stop < 0 and step < 0)::
             # extended slicing request
             length = len(oBject)
             if length == 0:
