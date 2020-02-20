@@ -41,7 +41,7 @@ class ExtendedSlicing():
         [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
         It's an overlapping mode: with one or more duplicated item.
 
-    I don't know if this overlapping is a your request or not, but if it's this class raise a ValueError
+    I don't know if this overlapping is a your request or not, but if it this class raise a ValueError
 
     all other normally slicing modes operate as usual.
 
