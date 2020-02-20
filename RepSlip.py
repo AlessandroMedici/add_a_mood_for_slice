@@ -30,8 +30,6 @@ class ExtendedSlicing():
     ["e", "f", "a", "b", "c"]
     a[4:4]
     ["e", "f", "a", "b", "c", "d"]
-    
-    LOOK AT step! Not many people know it!
 
     admitting this mode in a call, obviously we are risking this case:
 
@@ -73,7 +71,6 @@ class ExtendedSlicing():
 
         if start >= stop:
             # extended slicing request
-            oBject = self.oBject
             length = len(oBject)
             if length == 0:
                 return []
@@ -85,22 +82,19 @@ class ExtendedSlicing():
             bSet = set(b)
             c = aSet.intersection(bSet)
 
-            if stop < 0 and start >= 0:
+            lenInterS = len(c)  # -> the lenght of intersection is the lenght of overlap
+            if lenInterS:
+                # affordable error detecting, but too slow for a very large oBject
+                raise ValueError('Too many overlapping here!',  # arg[0]
+                                 "get " + str(lenInterS) + " but not one is admitted.",  # arg[1]
+                                 start,  # arg[2]
+                                 stop,  # arg[3]
+                                 step,  # arg[4]
+                                 len(a) + len(b),  # arg[5]
+                                 len(oBject)  # arg[6]
+                                 )
 
-                lenInterS = len(c)  # -> the lenght of intersection is the lenght of overlap
-                if lenInterS:
-                    # affordable error detecting, but too slow for a very large oBject
-                    raise ValueError('Too many overlapping here!',  # arg[0]
-                                     "get " + str(lenInterS) + " but not one is admitted.",  # arg[1]
-                                     start,  # arg[2]
-                                     stop,  # arg[3]
-                                     step,  # arg[4]
-                                     len(a) + len(b),  # arg[5]
-                                     len(oBject)  # arg[6]
-                                     )
-
-
-                return a + b
+            return a + b
 
         return self.oBject[start:stop:step]
 
@@ -121,8 +115,7 @@ def test(n=20, maxoverlap=20):
                     try:
                         b = lis[start:stop:step]  # call spicing function
                     except ValueError as ve:
-                        for h in ve.args:
-                            print(h)
+                        print(ve.args)
 
 
 if __name__ == '__main__':
