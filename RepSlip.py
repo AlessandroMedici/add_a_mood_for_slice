@@ -11,10 +11,10 @@ class ExtendedSlicing():
                 but calling ExtendedSlicing([i for i in range(10)]) or ExtendedSlicing(aList)
                 is admitted from Python.
 
-    return -> a normal object the same class of original object NOT one instance of ExtendedSlicing class.
-              to allow it simple encapsulate:
-              Es = ExtendedSlicing
-              aExtendedSlicingObject = Es(Es([i for i in range(10)])
+    return ->   a normal object the same class of original object NOT one instance of ExtendedSlicing class.
+                to allow it simple encapsulate:
+                Es = ExtendedSlicing
+                aExtendedSlicingObject = Es(Es([i for i in range(10)])
     
     
     Normally, if you type object[start:stop:step] with start <= stop, ("step" isn't relevant), you obtain an empty
@@ -42,7 +42,7 @@ class ExtendedSlicing():
         [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
         It's an overlapping mode: with one or more duplicated item.
 
-    I don't know if this overlapping is a your request or not, but if it this class raise a ValueError
+    I don't know if this overlapping is a your request or not, but if it this class raise a ValueError,
 
     all other normally slicing modes operate as usual.
 
