@@ -98,7 +98,7 @@ class ExtendedSlicing():
         return self.oBject[start:stop:step]
 
 
-def test(n=20, maxoverlap=20):
+def test(n=20):
 
     for step in range(-n, n):  # for all reasonable index step
         if step == 0:
